@@ -9,4 +9,5 @@ color="#ffeeff" #hex for pink
 window=tkinter.Tk()
 interface=tkinter.Canvas(window,height=windowHeight,width=windowWidth,bg=color,highlightthickness=0)
 interface.pack(fill=tkinter.BOTH) #Removing Borderss
+window.attributes("-fullscreen",True)
 
