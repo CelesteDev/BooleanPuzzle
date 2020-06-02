@@ -1,5 +1,6 @@
 import tkinter
 import globalVar
+import gate
 from PIL import Image, ImageTk
 import math
 
@@ -29,43 +30,50 @@ def getTilePosition(x,y):
 
     return (tileX,tileY)
 
-def getEdgePosition(direction):
-    if direction==globalVar.N:
-        return (0,-globalVar.tileHeight/2)
-    if direction==globalVar.NE:
-        return (globalVar.tileWidth*3/8,-globalVar.tileHeight/4)
-    if direction==globalVar.SE:
-        return (globalVar.tileWidth*3/8,globalVar.tileHeight/4)
-    if direction==globalVar.S:
-        return (0,globalVar.tileHeight/2)
-    if direction==globalVar.SW:
-        return (-globalVar.tileWidth*3/8,globalVar.tileHeight/4)
-    if direction==globalVar.NW:
-        return (-globalVar.tileWidth*3/8,-globalVar.tileHeight/4)
+circleOffsets={}
+circleOffsets[globalVar.N]=(0,-108)
+circleOffsets[globalVar.NE]=(92,-58)
+circleOffsets[globalVar.SE]=(92,24)
+circleOffsets[globalVar.S]=(0,75)
+circleOffsets[globalVar.SW]=(-92,24)
+circleOffsets[globalVar.NW]=(-92,-58)
 
-def getDirectionAngle(direction):
-	edgePosition=getEdgePosition(direction)
-	radians=math.atan2(edgePosition[1],edgePosition[0])+math.pi
-	return 180*radians/math.pi+180
+def inputCircle(x,y,direction):
+    centerX,centerY=getTilePosition(x,y)
+    centerY-=globalVar.gateExtraHeight/2
 
-tileImg=ImageTk.PhotoImage(Image.open('assets/images/tile.png'))
+    offset=circleOffsets[direction]
+    centerX+=offset[0]
+    centerY+=offset[1]
 
-gateOff=ImageTk.PhotoImage(Image.open('assets/images/gate_off.png'))
-gateOn=ImageTk.PhotoImage(Image.open('assets/images/gate_on.png'))
-gateDebugger=ImageTk.PhotoImage(Image.open('assets/images/gate_debugger.png'))
-gateWire=ImageTk.PhotoImage(Image.open('assets/images/gate_wire.png'))
+    return interface.create_oval(centerX-4,centerY-4,centerX+4,centerY+4,fill='#ff0000',outline='#ff0000')
+
+def outputCircle(x,y,direction):
+    centerX,centerY=getTilePosition(x,y)
+    centerY-=globalVar.gateExtraHeight/2
+
+    offset=circleOffsets[direction]
+    centerX+=offset[0]
+    centerY+=offset[1]
+
+    return interface.create_oval(centerX-4,centerY-4,centerX+4,centerY+4,fill='#00ff00',outline='#00ff00')
+
+tileImg=ImageTk.PhotoImage(Image.open('assets/images/empty.png'))
+
+gateImg=ImageTk.PhotoImage(Image.open('assets/images/gatePlatform.png'))
 
 inputImages={}
-for direction in [globalVar.N,globalVar.NE,globalVar.SE,globalVar.S,globalVar.SW,globalVar.NW]:
-	image=Image.open('assets/images/input.png').rotate(getDirectionAngle(direction))
-	inputImages[direction]=ImageTk.PhotoImage(image)
+inputImages[globalVar.N]=ImageTk.PhotoImage(Image.open('assets/images/InputUnlit/Input_N.png'))
+inputImages[globalVar.NE]=ImageTk.PhotoImage(Image.open('assets/images/InputUnlit/Input_NE.png'))
+inputImages[globalVar.SE]=ImageTk.PhotoImage(Image.open('assets/images/InputUnlit/Input_SE.png'))
+inputImages[globalVar.S]=ImageTk.PhotoImage(Image.open('assets/images/InputUnlit/Input_S.png'))
+inputImages[globalVar.SW]=ImageTk.PhotoImage(Image.open('assets/images/InputUnlit/Input_SW.png'))
+inputImages[globalVar.NW]=ImageTk.PhotoImage(Image.open('assets/images/InputUnlit/Input_NW.png'))
 
-def gateImage(gate):
-	if gate.__class__.__name__=='off':
-		return gateOff
-	if gate.__class__.__name__=='on':
-		return gateOn
-	if gate.__class__.__name__=='debugger':
-		return gateDebugger
-	if gate.__class__.__name__=='wire':
-		return gateWire
+unlitInputs={}
+unlitOutputs={}
+bindings={}
+
+unlitInputs[gate.multiply]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Unlit/Input'+str(i)+'.png')) for i in [1,2]]
+unlitOutputs[gate.multiply]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Unlit/Output1.png'))]
+bindings[gate.multiply]=ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Binding.png'))

@@ -13,8 +13,9 @@ def loop():
 loop()
 
 
+
 map.mapHandler.create(3,3)
-map.mapHandler.editTile(0,2,gate.on)
+'''map.mapHandler.editTile(0,2,gate.on)
 globalVar.gateMap[0][2].setOutput(0,globalVar.NE)
 
 map.mapHandler.editTile(2,1,gate.debugger)
@@ -26,23 +27,19 @@ globalVar.gateMap[1][0].setInput(0,globalVar.S)
 map.mapHandler.editTile(1,1,gate.wire)
 globalVar.gateMap[1][1].togglePort(globalVar.SW)
 globalVar.gateMap[1][1].togglePort(globalVar.N)
-globalVar.gateMap[1][1].togglePort(globalVar.NE)
+globalVar.gateMap[1][1].togglePort(globalVar.NE)'''
+
+map.mapHandler.editTile(1,1,gate.multiply)
+globalVar.gateMap[1][1].setInput(0,globalVar.SW)
+globalVar.gateMap[1][1].setInput(1,globalVar.SE)
+globalVar.gateMap[1][1].setOutput(1,globalVar.N)
+
+map.mapHandler.editTile(2,1,gate.multiply)
+globalVar.gateMap[2][1].setInput(0,globalVar.SW)
+globalVar.gateMap[2][1].setInput(1,globalVar.S)
+globalVar.gateMap[2][1].setOutput(1,globalVar.NW)
 
 map.mapHandler.stepSim()
-
-print(globalVar.valueMap)
-
-print("\ninputs:")
-print(globalVar.gateMap[0][2].inputMap)
-print(globalVar.gateMap[2][1].inputMap)
-print(globalVar.gateMap[1][0].inputMap)
-print(globalVar.gateMap[1][1].inputMap)
-
-print("\noutputs:")
-print(globalVar.gateMap[0][2].outputMap)
-print(globalVar.gateMap[2][1].outputMap)
-print(globalVar.gateMap[1][0].outputMap)
-print(globalVar.gateMap[1][1].outputMap)
 
 mapDisplay=map_display.MapDisplay(graphic.interface)
 mapDisplay.loadGateGraphics()
