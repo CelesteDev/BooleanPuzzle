@@ -63,12 +63,12 @@ def roundTile(x,y):
 
 
 circleOffsets={}
-circleOffsets[globalVar.N]=(0,-108)
-circleOffsets[globalVar.NE]=(92,-58)
-circleOffsets[globalVar.SE]=(92,24)
-circleOffsets[globalVar.S]=(0,75)
-circleOffsets[globalVar.SW]=(-92,24)
-circleOffsets[globalVar.NW]=(-92,-58)
+circleOffsets[globalVar.N]=(0,-54)
+circleOffsets[globalVar.NE]=(46,-29)
+circleOffsets[globalVar.SE]=(46,12)
+circleOffsets[globalVar.S]=(0,37)
+circleOffsets[globalVar.SW]=(-46,12)
+circleOffsets[globalVar.NW]=(-46,-29)
 
 def inputCircle(x,y,direction):
     centerX,centerY=getTilePosition(x,y)
@@ -78,7 +78,7 @@ def inputCircle(x,y,direction):
     centerX+=offset[0]
     centerY+=offset[1]
 
-    return interface.create_oval(centerX-4,centerY-4,centerX+4,centerY+4,fill='#ff0000',outline='#ff0000')
+    return interface.create_oval(centerX-2,centerY-2,centerX+2,centerY+2,fill='#ff0000',outline='#ff0000')
 
 def outputCircle(x,y,direction):
     centerX,centerY=getTilePosition(x,y)
@@ -88,7 +88,7 @@ def outputCircle(x,y,direction):
     centerX+=offset[0]
     centerY+=offset[1]
 
-    return interface.create_oval(centerX-4,centerY-4,centerX+4,centerY+4,fill='#00ff00',outline='#00ff00')
+    return interface.create_oval(centerX-2,centerY-2,centerX+2,centerY+2,fill='#00ff00',outline='#00ff00')
 
 tileImg=ImageTk.PhotoImage(Image.open('assets/images/empty.png'))
 

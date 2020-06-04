@@ -15,12 +15,13 @@ class MapDisplay:
                 tileColumn.append(newTile)
             self.tileSprites.append(tileColumn)
 
-        tempX,tempY=graphic.getTilePosition(0,0)
-        interface.create_oval(tempX-4,tempY-4,tempX+4,tempY+4,fill='#ff0000',outline='#ff0000')
-
         self.gateBaseSprites=[[None for i2 in range(globalVar.length)] for i in range(globalVar.width)]
+
+        self.inputPortDirections=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.inputPortSprites=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.inputPortCircles=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
+
+        self.outputPortDirections=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.outputPortSprites=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.outputPortCircles=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
 
@@ -38,19 +39,30 @@ class MapDisplay:
                     if self.gateBaseSprites[i][i2]==None:
                         self.gateBaseSprites[i][i2]=self.interface.create_image(tileX, tileY, image=graphic.gateImg)
 
-                    for inputDirection in globalVar.gateMap[i][i2].inputMap:
-                        if inputDirection!=None:
-                            if self.inputPortSprites[i][i2][inputDirection]==None:
+                    for i3 in range(6):
+                        inputDirection=globalVar.gateMap[i][i2].inputMap[i3]
+                        storedDirection=self.inputPortDirections[i][i2][i3]
+                        if inputDirection!=storedDirection:
+                            if storedDirection!=None:
+                                self.interface.delete(self.inputPortSprites[i][i2][storedDirection])
+                                self.interface.delete(self.inputPortCircles[i][i2][storedDirection])
+                            if inputDirection!=None:
                                 self.inputPortSprites[i][i2][inputDirection]=self.interface.create_image(tileX,tileY,image=graphic.inputImages[inputDirection])
-                            if self.inputPortCircles[i][i2][inputDirection]==None:
                                 self.inputPortCircles[i][i2][inputDirection]=graphic.inputCircle(i,i2,inputDirection)
-
-                    for outputDirection in globalVar.gateMap[i][i2].outputMap:
-                        if outputDirection!=None:
-                            if self.outputPortSprites[i][i2][outputDirection]==None:
+                            
+                            self.inputPortDirections[i][i2][i3]=inputDirection
+                    for i3 in range(6):
+                        outputDirection=globalVar.gateMap[i][i2].outputMap[i3]
+                        storedDirection=self.outputPortDirections[i][i2][i3]
+                        if outputDirection!=storedDirection:
+                            if storedDirection!=None:
+                                self.interface.delete(self.outputPortSprites[i][i2][storedDirection])
+                                self.interface.delete(self.outputPortCircles[i][i2][storedDirection])
+                            if outputDirection!=None:
                                 self.outputPortSprites[i][i2][outputDirection]=self.interface.create_image(tileX,tileY,image=graphic.inputImages[outputDirection])
-                            if self.outputPortCircles[i][i2][outputDirection]==None:
                                 self.outputPortCircles[i][i2][outputDirection]=graphic.outputCircle(i,i2,outputDirection)
+                            
+                            self.outputPortDirections[i][i2][i3]=outputDirection
 
                     gateClass=globalVar.gateMap[i][i2].__class__
                     for i3 in range(globalVar.gateMap[i][i2].inputAmount):

@@ -14,6 +14,10 @@ def mousePressEvent(event):
     global pressedGateX
     global pressedGateY
 
+    pressedGateDirection=None
+    pressedGateX=None
+    pressedGateY=None
+
     x=event.x
     y=event.y
 
@@ -33,39 +37,45 @@ def mousePressEvent(event):
         pressedGateX=roundedX
         pressedGateY=roundedY
 
-def mouseReleaseEvent(event):
+def mouseMoveEvent(event):
     global pressedGateDirection
     global pressedGateX
     global pressedGateY
-    
-    x=event.x
-    y=event.y
-
-    tileX,tileY=graphic.getTileFromPixel(x,y)
-
-    roundedX,roundedY=graphic.roundTile(tileX,tileY)
 
     if pressedGateDirection!=None:
+        x=event.x
+        y=event.y
+
+        tileX,tileY=graphic.getTileFromPixel(x,y)
+
+        roundedX,roundedY=graphic.roundTile(tileX,tileY)
+
         tileCenterX,tileCenterY=graphic.getTilePosition(roundedX,roundedY)
         diffX=x-tileCenterX
         diffY=y-tileCenterY
         angle=math.atan2(diffY,diffX)+math.pi
-        angleIndex=math.floor(3*angle/math.pi)
-        releasedGateDirection=[globalVar.NW,globalVar.N,globalVar.NE,globalVar.SE,globalVar.S,globalVar.SW][angleIndex]
-        if releasedGateDirection!=pressedGateDirection:
+        angleIndex=min(5,math.floor(3*angle/math.pi))
+        currentGateDirection=[globalVar.NW,globalVar.N,globalVar.NE,globalVar.SE,globalVar.S,globalVar.SW][angleIndex]
+
+        if currentGateDirection!=pressedGateDirection:
+            changed=False
             for i in range(6):
                 direction=globalVar.gateMap[pressedGateX][pressedGateY].inputMap[i]
                 if direction==pressedGateDirection:
-                    globalVar.gateMap[pressedGateX][pressedGateY].inputMap[i]=releasedGateDirection
-                    print("moving input from",direction,"to",releasedGateDirection)
+                    if currentGateDirection not in globalVar.gateMap[pressedGateX][pressedGateY].inputMap and currentGateDirection not in globalVar.gateMap[pressedGateX][pressedGateY].outputMap:
+                        globalVar.gateMap[pressedGateX][pressedGateY].inputMap[i]=currentGateDirection
+                        changed=True
                     break
             for i in range(6):
                 direction=globalVar.gateMap[pressedGateX][pressedGateY].outputMap[i]
                 if direction==pressedGateDirection:
-                    globalVar.gateMap[pressedGateX][pressedGateY].outputMap[i]=releasedGateDirection
-                    print("moving output from",direction,"to",releasedGateDirection)
+                    if currentGateDirection not in globalVar.gateMap[pressedGateX][pressedGateY].inputMap and currentGateDirection not in globalVar.gateMap[pressedGateX][pressedGateY].outputMap:
+                        globalVar.gateMap[pressedGateX][pressedGateY].outputMap[i]=currentGateDirection
+                        changed=True
                     break
-    pressedGateDirection=None
+            if changed:
+                pressedGateDirection=currentGateDirection
+    globalVar.mapDisplay.updateGateGraphics()
 
 def createNewGate(x,y):
     map.mapHandler.editTile(x,y,gate.multiply)
@@ -75,4 +85,4 @@ def createNewGate(x,y):
     globalVar.mapDisplay.updateGateGraphics()
 
 graphic.interface.bind("<Button-1>",mousePressEvent)
-graphic.interface.bind("<ButtonRelease-1>",mouseReleaseEvent)
+graphic.interface.bind("<B1-Motion>",mouseMoveEvent)
