@@ -15,7 +15,7 @@ interface=tkinter.Canvas(window,height=windowHeight,width=windowWidth,bg=color,h
 interface.pack(fill=tkinter.BOTH) #Removing Borderss
 window.attributes("-fullscreen",True)
 
-def getTilePosition(x,y):
+def tileOffsets():
     # Find the total height and width of the map
     mapGraphicWidth=(globalVar.width-1)*globalVar.tileWidth*3/4
     mapGraphicHeight=(globalVar.length-1)*globalVar.tileHeight+(globalVar.width-1)*globalVar.tileHeight/2
@@ -25,10 +25,42 @@ def getTilePosition(x,y):
     tileOffsetX=(interface.winfo_width()-mapGraphicWidth)/2
     tileOffsetY=(interface.winfo_height()-mapGraphicHeight)/2
 
+    return (tileOffsetX,tileOffsetY)
+
+def getTilePosition(x,y):
+    tileOffsetX,tileOffsetY=tileOffsets()
+
     tileX=tileOffsetX+x*globalVar.tileWidth*3/4
     tileY=tileOffsetY+y*globalVar.tileHeight+x*globalVar.tileHeight/2
 
     return (tileX,tileY)
+
+def getTileFromPixel(x,y):
+    tileOffsetX,tileOffsetY=tileOffsets()
+
+    tileX=(x-tileOffsetX)/(globalVar.tileWidth*3/4)
+    tileY=(y-(tileOffsetY+tileX*globalVar.tileHeight/2))/globalVar.tileHeight
+
+    return (tileX,tileY)
+
+def roundTile(x,y):
+    z=-(x+y)
+
+    roundedX=round(x)
+    roundedY=round(y)
+    roundedZ=round(z)
+
+    xDiff=abs(x-roundedX)
+    yDiff=abs(y-roundedY)
+    zDiff=abs(z-roundedZ)
+
+    if xDiff>yDiff and xDiff>zDiff:
+        roundedX=-(roundedY+roundedZ)
+    elif yDiff>zDiff:
+        roundedY=-(roundedX+roundedZ)
+
+    return (roundedX,roundedY)
+
 
 circleOffsets={}
 circleOffsets[globalVar.N]=(0,-108)

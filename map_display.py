@@ -15,6 +15,9 @@ class MapDisplay:
                 tileColumn.append(newTile)
             self.tileSprites.append(tileColumn)
 
+        tempX,tempY=graphic.getTilePosition(0,0)
+        interface.create_oval(tempX-4,tempY-4,tempX+4,tempY+4,fill='#ff0000',outline='#ff0000')
+
         self.gateBaseSprites=[[None for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.inputPortSprites=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.inputPortCircles=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
@@ -25,31 +28,39 @@ class MapDisplay:
         self.gateOutputSprites=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.gateBindingSprites=[[None for i2 in range(globalVar.length)] for i in range(globalVar.width)]
 
-    def loadGateGraphics(self):
+    def updateGateGraphics(self):
         for i in range(globalVar.width):
             for i2 in range(globalVar.length):
                 if globalVar.gateMap[i][i2]!=None:
                     tileX,tileY=graphic.getTilePosition(i,i2)
                     tileY-=globalVar.gateExtraHeight/2
 
-                    self.gateBaseSprites[i][i2]=self.interface.create_image(tileX, tileY, image=graphic.gateImg)
+                    if self.gateBaseSprites[i][i2]==None:
+                        self.gateBaseSprites[i][i2]=self.interface.create_image(tileX, tileY, image=graphic.gateImg)
 
                     for inputDirection in globalVar.gateMap[i][i2].inputMap:
                         if inputDirection!=None:
-                            self.inputPortSprites[i][i2][inputDirection]=self.interface.create_image(tileX,tileY,image=graphic.inputImages[inputDirection])
-                            self.inputPortCircles[i][i2][inputDirection]=graphic.inputCircle(i,i2,inputDirection)
+                            if self.inputPortSprites[i][i2][inputDirection]==None:
+                                self.inputPortSprites[i][i2][inputDirection]=self.interface.create_image(tileX,tileY,image=graphic.inputImages[inputDirection])
+                            if self.inputPortCircles[i][i2][inputDirection]==None:
+                                self.inputPortCircles[i][i2][inputDirection]=graphic.inputCircle(i,i2,inputDirection)
 
                     for outputDirection in globalVar.gateMap[i][i2].outputMap:
                         if outputDirection!=None:
-                            self.outputPortSprites[i][i2][outputDirection]=self.interface.create_image(tileX,tileY,image=graphic.inputImages[outputDirection])
-                            self.outputPortCircles[i][i2][outputDirection]=graphic.outputCircle(i,i2,outputDirection)
+                            if self.outputPortSprites[i][i2][outputDirection]==None:
+                                self.outputPortSprites[i][i2][outputDirection]=self.interface.create_image(tileX,tileY,image=graphic.inputImages[outputDirection])
+                            if self.outputPortCircles[i][i2][outputDirection]==None:
+                                self.outputPortCircles[i][i2][outputDirection]=graphic.outputCircle(i,i2,outputDirection)
 
                     gateClass=globalVar.gateMap[i][i2].__class__
                     for i3 in range(globalVar.gateMap[i][i2].inputAmount):
-                        self.gateInputSprites[i][i2][i3]=self.interface.create_image(tileX,tileY,image=graphic.unlitInputs[gateClass][i3])
+                        if self.gateInputSprites[i][i2][i3]==None:
+                            self.gateInputSprites[i][i2][i3]=self.interface.create_image(tileX,tileY,image=graphic.unlitInputs[gateClass][i3])
                     for i3 in range(globalVar.gateMap[i][i2].outputAmount):
-                        self.gateOutputSprites[i][i2][i3]=self.interface.create_image(tileX,tileY,image=graphic.unlitOutputs[gateClass][i3])
-                    self.gateBindingSprites[i][i2]=self.interface.create_image(tileX,tileY,image=graphic.bindings[gateClass])
+                        if self.gateOutputSprites[i][i2][i3]==None:
+                            self.gateOutputSprites[i][i2][i3]=self.interface.create_image(tileX,tileY,image=graphic.unlitOutputs[gateClass][i3])
+                    if self.gateBindingSprites[i][i2]==None:
+                        self.gateBindingSprites[i][i2]=self.interface.create_image(tileX,tileY,image=graphic.bindings[gateClass])
 
         self.layerGateGraphics()
 

@@ -1,4 +1,5 @@
 import graphic
+import input_handler
 import map_display
 import tkinter
 import map
@@ -42,6 +43,8 @@ globalVar.gateMap[2][1].setOutput(1,globalVar.NW)
 map.mapHandler.stepSim()
 
 mapDisplay=map_display.MapDisplay(graphic.interface)
-mapDisplay.loadGateGraphics()
+mapDisplay.updateGateGraphics()
+
+globalVar.mapDisplay=mapDisplay
 
 graphic.interface.mainloop() #initialising the window
