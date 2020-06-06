@@ -105,7 +105,11 @@ inputImages[globalVar.NW]=ImageTk.PhotoImage(Image.open('assets/images/InputUnli
 unlitInputs={}
 unlitOutputs={}
 bindings={}
+icons={}
 
 unlitInputs[gate.multiply]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Unlit/Input'+str(i)+'.png')) for i in [1,2]]
 unlitOutputs[gate.multiply]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Unlit/Output1.png'))]
 bindings[gate.multiply]=ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Binding.png'))
+icons[gate.multiply]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/And.png'))
+
+gateIconHighlight=ImageTk.PhotoImage(Image.open('assets/images/gateIconHighlight.png'))

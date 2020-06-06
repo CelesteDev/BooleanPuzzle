@@ -1,5 +1,10 @@
 import graphic
+import gate
 import globalVar
+
+selectionBarHeight=100
+selectionBarLeft=100
+selectionBarSpacing=100
 
 class MapDisplay:
 
@@ -28,6 +33,18 @@ class MapDisplay:
         self.gateInputSprites=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.gateOutputSprites=[[[None for i3 in range(6)] for i2 in range(globalVar.length)] for i in range(globalVar.width)]
         self.gateBindingSprites=[[None for i2 in range(globalVar.length)] for i in range(globalVar.width)]
+
+        self.selectionBar=interface.create_rectangle(0,interface.winfo_height()-selectionBarHeight,interface.winfo_width(),interface.winfo_height(),outline="#ccaacc",fill="#ccaacc")
+        self.gateIcons={}
+
+        self.availableGates=[gate.multiply]
+
+        self.gateIcons=[]
+        for i in range(len(self.availableGates)):
+            self.gateIcons.append(interface.create_image(selectionBarLeft+selectionBarSpacing*len(self.gateIcons), interface.winfo_height()-selectionBarHeight/2, image=graphic.icons[self.availableGates[i]]))
+
+        self.selectedGate=0
+        self.selectedGateIconHighlight=interface.create_image(0, 0, image=graphic.gateIconHighlight)
 
     def updateGateGraphics(self):
         for i in range(globalVar.width):
@@ -74,6 +91,9 @@ class MapDisplay:
                     if self.gateBindingSprites[i][i2]==None:
                         self.gateBindingSprites[i][i2]=self.interface.create_image(tileX,tileY,image=graphic.bindings[gateClass])
 
+        self.interface.delete(self.selectedGateIconHighlight)
+        self.selectedGateIconHighlight=self.interface.create_image(selectionBarLeft+selectionBarSpacing*self.selectedGate,self.interface.winfo_height()-selectionBarHeight/2,image=graphic.gateIconHighlight)
+
         self.layerGateGraphics()
 
     def layerGateGraphics(self):
@@ -94,3 +114,9 @@ class MapDisplay:
                         if self.outputPortSprites[i2][i][direction]!=None:
                             self.interface.tag_raise(self.outputPortSprites[i2][i][direction])
                             self.interface.tag_raise(self.outputPortCircles[i2][i][direction])
+
+        self.interface.tag_raise(self.selectionBar)
+        self.interface.tag_raise(self.selectedGateIconHighlight)
+
+        for g in self.gateIcons:
+            self.interface.tag_raise(g)
