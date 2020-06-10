@@ -112,4 +112,42 @@ unlitOutputs[gate.multiply]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/
 bindings[gate.multiply]=ImageTk.PhotoImage(Image.open('assets/images/Gates/And/Binding.png'))
 icons[gate.multiply]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/And.png'))
 
+unlitInputs[gate.add]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Or/Unlit/Input'+str(i)+'.png')) for i in [1,2]]
+unlitOutputs[gate.add]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Or/Unlit/Output1.png'))]
+bindings[gate.add]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Or/Binding.png'))
+icons[gate.add]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/Or.png'))
+
+unlitInputs[gate.xor]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Xor/Unlit/Input'+str(i)+'.png')) for i in [1,2]]
+unlitOutputs[gate.xor]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Xor/Unlit/Output1.png'))]
+bindings[gate.xor]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Xor/Binding.png'))
+icons[gate.xor]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/Xor.png'))
+
+unlitInputs[gate.negative]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Not/Unlit/Input1.png'))]
+unlitOutputs[gate.negative]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Not/Unlit/Output1.png'))]
+bindings[gate.negative]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Not/Binding.png'))
+icons[gate.negative]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/Not.png'))
+
+unlitInputs[gate.off]=[]
+unlitOutputs[gate.off]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/False/Unlit/Output1.png'))]
+bindings[gate.off]=ImageTk.PhotoImage(Image.open('assets/images/Gates/False/Binding.png'))
+icons[gate.off]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/False.png'))
+
+unlitInputs[gate.on]=[]
+unlitOutputs[gate.on]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/True/Unlit/Output1.png'))]
+bindings[gate.on]=ImageTk.PhotoImage(Image.open('assets/images/Gates/True/Binding.png'))
+icons[gate.on]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/True.png'))
+
+unlitInputs[gate.debugger]=[]
+unlitOutputs[gate.debugger]=[ImageTk.PhotoImage(Image.open('assets/images/Gates/Debugger/Unlit/Output1.png'))]
+bindings[gate.debugger]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Debugger/Binding.png'))
+icons[gate.debugger]=ImageTk.PhotoImage(Image.open('assets/images/Gates/Icons/Debugger.png'))
+
+unlitWires={}
+unlitWires[globalVar.N]=ImageTk.PhotoImage(Image.open('assets/images/Wire/Unlit/Wire_N.png'))
+unlitWires[globalVar.NE]=ImageTk.PhotoImage(Image.open('assets/images/Wire/Unlit/Wire_NE.png'))
+unlitWires[globalVar.SE]=ImageTk.PhotoImage(Image.open('assets/images/Wire/Unlit/Wire_SE.png'))
+unlitWires[globalVar.S]=ImageTk.PhotoImage(Image.open('assets/images/Wire/Unlit/Wire_S.png'))
+unlitWires[globalVar.SW]=ImageTk.PhotoImage(Image.open('assets/images/Wire/Unlit/Wire_SW.png'))
+unlitWires[globalVar.NW]=ImageTk.PhotoImage(Image.open('assets/images/Wire/Unlit/Wire_NW.png'))
+
 gateIconHighlight=ImageTk.PhotoImage(Image.open('assets/images/gateIconHighlight.png'))

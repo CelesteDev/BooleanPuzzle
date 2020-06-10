@@ -69,9 +69,12 @@ class gate:
 
 class wire(gate):
     #this special gate doesn't need to check for stability
-    inputAmount = 1 #fixed
-    outputAmount = 0 #dynamic
-    portMap = [False] * 6 #if port in use (potential input output)
+    
+    def __init__(self,x,y):
+        self.inputAmount=1
+        self.outputAmount=0
+        self.portMap = [False] * 6 #if port in use (potential input output)
+        super(wire,self).__init__(x,y)
 
     def function(self,input):
         return [input[0]] * self.outputAmount
@@ -166,7 +169,7 @@ class debugger(gate):
         super(debugger,self).__init__(x,y)
 
     def function(self,input):
-        print("debbug gate reports : " + str(input[0]))
+        print("debug gate reports : " + str(input[0]))
         return []
 
 

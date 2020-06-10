@@ -8,3 +8,5 @@ N,NE,SE,S,SW,NW = 0,1,2,3,4,5
 tileWidth=160
 tileHeight=120
 gateExtraHeight=16
+
+mapDisplay=None

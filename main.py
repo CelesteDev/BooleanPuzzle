@@ -35,10 +35,9 @@ globalVar.gateMap[1][1].setInput(0,globalVar.SW)
 globalVar.gateMap[1][1].setInput(1,globalVar.SE)
 globalVar.gateMap[1][1].setOutput(1,globalVar.N)
 
-map.mapHandler.editTile(2,1,gate.multiply)
-globalVar.gateMap[2][1].setInput(0,globalVar.SW)
-globalVar.gateMap[2][1].setInput(1,globalVar.S)
-globalVar.gateMap[2][1].setOutput(1,globalVar.NW)
+map.mapHandler.editTile(2,1,gate.negative)
+globalVar.gateMap[2][1].setInput(0,globalVar.S)
+globalVar.gateMap[2][1].setOutput(1,globalVar.N)
 
 map.mapHandler.stepSim()
 
